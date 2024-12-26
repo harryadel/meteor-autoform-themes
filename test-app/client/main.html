@@ -1,5 +1,5 @@
 <head>
-  <title>AutoForm Themes Test</title>
+  <title>AutoForm Themes Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -15,19 +15,68 @@
   </nav>
 
   <div class="container mx-auto p-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {{> themeSection title="Bootstrap 3" template="bootstrap3"}}
-      {{> themeSection title="Bootstrap 4" template="bootstrap4"}}
-      {{> themeSection title="Bootstrap 5" template="bootstrap5"}}
-      {{> themeSection title="Plain" template="plain"}}
-      {{> themeSection title="Tailwind" template="tailwind"}}
+    
+    <div class="tab-content">
+      {{#with currentTheme}}
+        <div class="container mx-auto px-4 py-8">
+          <h1 class="text-3xl font-bold mb-6">AutoForm Themes Demo</h1>
+
+          <div class="mb-8">
+            <div class="flex border-b border-gray-200 mb-4">
+              <button class="theme-button px-4 py-2 border-b-2 font-medium text-sm {{isActiveTab 'bootstrap3'}}" data-theme="bootstrap3">
+                Bootstrap 3
+              </button>
+              <button class="theme-button px-4 py-2 border-b-2 font-medium text-sm {{isActiveTab 'bootstrap4'}}" data-theme="bootstrap4">
+                Bootstrap 4
+              </button>
+              <button class="theme-button px-4 py-2 border-b-2 font-medium text-sm {{isActiveTab 'bootstrap5'}}" data-theme="bootstrap5">
+                Bootstrap 5
+              </button>
+              <button class="theme-button px-4 py-2 border-b-2 font-medium text-sm {{isActiveTab 'plain'}}" data-theme="plain">
+                Plain
+              </button>
+              <button class="theme-button px-4 py-2 border-b-2 font-medium text-sm {{isActiveTab 'tailwind'}}" data-theme="tailwind">
+                Tailwind
+              </button>
+            </div>
+
+            {{#autoForm collection=collection id="demoForm" type="normal" template=this}}
+              {{> afQuickField name="firstName"}}
+              {{> afQuickField name="lastName"}}
+              {{> afQuickField name="email"}}
+              {{> afQuickField name="website"}}
+              {{> afQuickField name="age"}}
+              {{> afQuickField name="rating"}}
+              {{> afQuickField name="country"}}
+              {{> afQuickField name="interests"}}
+              {{> afQuickField name="gender"}}
+              {{> afQuickField name="subscribe"}}
+              {{> afQuickField name="terms"}}
+              {{> afQuickField name="bio"}}
+              {{> afQuickField name="comments"}}
+              {{> afQuickField name="birthDate"}}
+              {{> afQuickField name="registrationDate"}}
+              {{> afQuickField name="address"}}
+              {{> afQuickField name="education"}}
+              <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            {{/autoForm}}
+          </div>
+        </div>
+      {{/with}}
     </div>
   </div>
 </template>
 
 <template name="themeSection">
-  <div class="border rounded-lg p-4">
+  <div class="p-4">
     <h2 class="text-xl font-bold mb-4">{{title}}</h2>
-    {{> quickForm collection=collection id=formId type="insert" template=template}}
+    {{#autoForm collection=collection id=formId type="insert"}}
+      {{> afQuickFields}}
+      <div class="mt-4">
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Submit</button>
+      </div>
+    {{/autoForm}}
   </div>
 </template>

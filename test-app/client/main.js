@@ -1,99 +1,250 @@
 import { Template } from 'meteor/templating';
-import 'meteor/aldeed:collection2/static';
+import { ReactiveVar } from 'meteor/reactive-var';
 import SimpleSchema from 'meteor/aldeed:simple-schema';
+import 'meteor/aldeed:collection2/static';
+import 'meteor/aldeed:autoform/static';
+import { AutoFormThemeBootstrap5 } from 'meteor/communitypackages:autoform-bootstrap5/static'
+import { AutoFormThemeBootstrap4 } from 'meteor/communitypackages:autoform-bootstrap4/static'
+import { AutoFormThemeBootstrap3 } from 'meteor/communitypackages:autoform-bootstrap3/static'
+import { AutoFormPlainTheme } from 'meteor/communitypackages:autoform-plain/static'
+import { AutoFormThemeTailwind } from 'meteor/communitypackages:autoform-tailwind/static'
+
 import './main.html';
-
-// Import Bootstrap CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@popperjs/core';
-import 'bootstrap';
-
 
 SimpleSchema.extendOptions(['autoform']);
 
+// Import packages
+AutoFormThemeBootstrap5.load()
+AutoFormThemeBootstrap4.load()
+AutoFormThemeBootstrap3.load()
+AutoFormPlainTheme.load()
+AutoFormThemeTailwind.load()
+
+// Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Create a test collection
 const TestCollection = new Mongo.Collection('test_collection');
 
-// Define the schema with various field types
+// Helper function to get current theme
+function getCurrentTheme() {
+  return currentTheme.get();
+}
+
+// Create a schema for the test collection
 const TestSchema = new SimpleSchema({
-  stringField: {
+  // Text inputs
+  firstName: {
     type: String,
-    label: 'String Field',
+    label: 'First Name',
     max: 200
   },
-  textField: {
+  lastName: {
     type: String,
-    label: 'Text Field',
+    label: 'Last Name',
+    max: 200
+  },
+  email: {
+    type: String,
+    label: 'Email',
+    regEx: SimpleSchema.RegEx.Email
+  },
+  website: {
+    type: String,
+    label: 'Website',
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
+  },
+  
+  // Number inputs
+  age: {
+    type: Number,
+    label: 'Age',
+    min: 0,
+    max: 150
+  },
+  rating: {
+    type: Number,
+    label: 'Rating',
+    min: 0,
+    max: 5,
+    optional: true
+  },
+
+  // Select inputs
+  country: {
+    type: String,
+    label: 'Country',
+    allowedValues: ['USA', 'Canada', 'Mexico', 'Other'],
+    autoform: {
+      type: 'select',
+      options: 'allowed'
+    }
+  },
+  interests: {
+    type: Array,
+    label: 'Interests',
+    optional: true,
+    autoform: {
+      type: 'select-multiple',
+      options: function() {
+        return [
+          {label: "Reading", value: "reading"},
+          {label: "Gaming", value: "gaming"},
+          {label: "Sports", value: "sports"},
+          {label: "Coding", value: "coding"}
+        ];
+      }
+    }
+  },
+  'interests.$': {
+    type: String
+  },
+
+  // Radio inputs
+  gender: {
+    type: String,
+    label: 'Gender',
+    allowedValues: ['Male', 'Female', 'Other', 'Prefer not to say'],
+    autoform: function() {
+      const theme = getCurrentTheme();
+      return {
+        type: theme.startsWith('bootstrap') ? 'radio-inline' : 'radio'
+      };
+    }
+  },
+
+  // Checkbox inputs
+  subscribe: {
+    type: Boolean,
+    label: 'Subscribe to newsletter',
+    defaultValue: false,
+    autoform: {
+      type: 'boolean-checkbox'
+    }
+  },
+  terms: {
+    type: Boolean,
+    label: 'I agree to the terms and conditions',
+    defaultValue: false,
+    autoform: {
+      type: 'boolean-radios',
+      options: [
+        {label: 'Yes', value: true},
+        {label: 'No', value: false}
+      ]
+    }
+  },
+
+  // Textarea inputs
+  bio: {
+    type: String,
+    label: 'Bio',
+    optional: true,
     max: 1000,
+    autoform: {
+      type: 'textarea',
+      rows: 5
+    }
+  },
+  comments: {
+    type: String,
+    label: 'Additional Comments',
+    optional: true,
     autoform: {
       type: 'textarea',
       rows: 3
     }
   },
-  numberField: {
-    type: Number,
-    label: 'Number Field',
-    min: 0,
-    max: 100
-  },
-  dateField: {
+
+  // Date inputs
+  birthDate: {
     type: Date,
-    label: 'Date Field'
-  },
-  booleanField: {
-    type: Boolean,
-    label: 'Boolean Field'
-  },
-  selectField: {
-    type: String,
-    label: 'Select Field',
-    allowedValues: ['option1', 'option2', 'option3'],
+    label: 'Birth Date',
+    optional: true,
     autoform: {
-      options: [
-        {label: 'Option 1', value: 'option1'},
-        {label: 'Option 2', value: 'option2'},
-        {label: 'Option 3', value: 'option3'}
-      ]
+      type: 'date'
     }
   },
-  radioField: {
-    type: String,
-    label: 'Radio Field',
-    allowedValues: ['radio1', 'radio2', 'radio3'],
+  registrationDate: {
+    type: Date,
+    label: 'Registration Date and Time',
+    optional: true,
     autoform: {
-      type: 'select-radio-inline',
-      options: [
-        {label: 'Radio 1', value: 'radio1'},
-        {label: 'Radio 2', value: 'radio2'},
-        {label: 'Radio 3', value: 'radio3'}
-      ]
+      type: 'datetime-local'
     }
   },
-  checkboxField: {
+
+  // Object fields
+  address: {
+    type: Object,
+    label: 'Address'
+  },
+  'address.street': {
+    type: String,
+    label: 'Street'
+  },
+  'address.city': {
+    type: String,
+    label: 'City'
+  },
+  'address.state': {
+    type: String,
+    label: 'State'
+  },
+  'address.zip': {
+    type: String,
+    label: 'ZIP Code'
+  },
+
+  // Array of objects
+  education: {
     type: Array,
-    label: 'Checkbox Field',
-    autoform: {
-      type: 'select-checkbox-inline',
-      options: [
-        {label: 'Check 1', value: 'check1'},
-        {label: 'Check 2', value: 'check2'},
-        {label: 'Check 3', value: 'check3'}
-      ]
-    }
+    optional: true,
+    label: 'Education History'
   },
-  'checkboxField.$': {
-    type: String
+  'education.$': {
+    type: Object
+  },
+  'education.$.school': {
+    type: String,
+    label: 'School Name'
+  },
+  'education.$.degree': {
+    type: String,
+    label: 'Degree'
+  },
+  'education.$.graduationYear': {
+    type: Number,
+    label: 'Graduation Year',
+    min: 1900,
+    max: new Date().getFullYear() + 10
   }
 });
 
+// Attach schema to collection
 TestCollection.attachSchema(TestSchema);
 
-Template.themeSection.helpers({
+// Initialize theme
+const currentTheme = new ReactiveVar('bootstrap3');
+
+Template.mainLayout.helpers({
+  currentTheme() {
+    return currentTheme.get();
+  },
   collection() {
     return TestCollection;
   },
-  formId() {
-    return `insertForm_${this.template}`;
+  isActiveTab(theme) {
+    return currentTheme.get() === theme ? 'border-blue-500 text-blue-600' : 'border-transparent';
+  }
+});
+
+Template.mainLayout.events({
+  'click .theme-button'(event) {
+    event.preventDefault();
+    const theme = event.currentTarget.getAttribute('data-theme');
+    currentTheme.set(theme);
+    console.log(theme);
   }
 });
