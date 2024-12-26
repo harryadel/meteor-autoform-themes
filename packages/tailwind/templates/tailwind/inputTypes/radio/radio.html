@@ -1,0 +1,8 @@
+<template name="afRadio_tailwind">
+  <div class="flex items-center">
+    <input type="radio" {{this.atts}} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 {{#if afFieldIsInvalid name=this.name}}border-red-500{{/if}}" />
+    {{#if this.label}}
+      <label class="ml-3 block text-sm font-medium text-gray-700">{{this.label}}</label>
+    {{/if}}
+  </div>
+</template>

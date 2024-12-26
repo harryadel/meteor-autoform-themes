@@ -1,0 +1,11 @@
+<template name="afCheckbox_tailwind">
+  <div class="relative flex items-start">
+    <div class="flex items-center h-5">
+      <input type="checkbox" value="true" {{atts}} 
+        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 {{#if afFieldIsInvalid name=this.name}}border-red-500{{/if}}" />
+    </div>
+    <div class="ml-3 text-sm">
+      <label class="font-medium text-gray-700">{{afFieldLabelText name=this.name}}</label>
+    </div>
+  </div>
+</template>

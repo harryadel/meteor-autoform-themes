@@ -1,0 +1,42 @@
+<template name="afArrayField_tailwind">
+  <div class="bg-white shadow rounded-lg border border-gray-200 {{panelClass}}">
+    <div class="px-4 py-3 border-b border-gray-200 {{headingClass}}">
+      {{afFieldLabelText name=this.atts.name}}
+    </div>
+    {{#if afFieldIsInvalid name=this.atts.name}}
+    <div class="p-4 text-red-600">
+      <p class="text-sm">{{{afFieldMessage name=this.atts.name}}}</p>
+    </div>
+    {{/if}}
+    <ul class="divide-y divide-gray-200">
+      {{#afEachArrayItem name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+      <li class="p-4">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+            <button type="button" class="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 autoform-remove-item">
+              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            {{/if}}
+          </div>
+          <div class="flex-grow min-w-0">
+            {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+          </div>
+        </div>
+      </li>
+      {{/afEachArrayItem}}
+      {{#if afArrayFieldHasLessThanMaximum name=this.atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+      <li class="p-4">
+        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 autoform-add-item" data-autoform-field="{{this.atts.name}}" data-autoform-minCount="{{this.atts.minCount}}" data-autoform-maxCount="{{this.atts.maxCount}}">
+          <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+          Add Item
+        </button>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+</template>

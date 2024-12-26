@@ -1,0 +1,7 @@
+<template name="afBooleanSelect_tailwind">
+  <select {{this.atts}} class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm {{#if afFieldIsInvalid name=this.name}}border-red-500{{/if}}">
+    {{#each this.items}}
+      <option value="{{value}}" {{selected}}>{{label}}</option>
+    {{/each}}
+  </select>
+</template>

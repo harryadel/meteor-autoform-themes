@@ -1,0 +1,15 @@
+<template name="afObjectField_tailwind">
+  <div class="bg-white shadow rounded-lg border border-gray-200 {{panelClass}}">
+    {{#with afFieldLabelText name=this.name}}
+    <div class="px-4 py-3 border-b border-gray-200 {{headingClass}}">
+      <h3 class="text-lg font-medium text-gray-900">{{this}}</h3>
+    </div>
+    {{/with}}
+    <div class="p-4 {{bodyClass}}">
+      {{#if afFieldIsInvalid name=this.name}}
+      <p class="mt-1 text-sm text-red-600">{{{afFieldMessage name=this.name}}}</p>
+      {{/if}}
+      {{> afQuickFields quickFieldsAtts}}
+    </div>
+  </div>
+</template>
