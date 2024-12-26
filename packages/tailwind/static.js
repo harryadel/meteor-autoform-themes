@@ -1,6 +1,9 @@
 import { AutoFormThemeTailwind } from './autoform-tailwind'
 
 AutoFormThemeTailwind.load = function () {
+  // Tailwind Template - General
+  require('./templates/tailwind/tailwind.js')
+
   // Tailwind Template - Components
   require('./templates/tailwind/components/quickForm/quickForm.html')
   require('./templates/tailwind/components/afFormGroup/afFormGroup.html')

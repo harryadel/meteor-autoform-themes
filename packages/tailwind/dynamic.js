@@ -2,6 +2,9 @@ import { AutoFormThemeTailwind } from './autoform-tailwind'
 
 AutoFormThemeTailwind.load = function () {
   return Promise.all([
+    // Tailwind Template - General
+    import('./templates/tailwind/tailwind.js'),
+
     // Tailwind Template - Components
     import('./templates/tailwind/components/quickForm/quickForm.html'),
     import('./templates/tailwind/components/afFormGroup/afFormGroup.html'),
