@@ -1,0 +1,33 @@
+<head>
+  <title>AutoForm Themes Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  {{> mainLayout}}
+</body>
+
+<template name="mainLayout">
+  <nav class="bg-gray-800 text-white p-4">
+    <div class="container mx-auto">
+      <h1 class="text-xl font-bold">AutoForm Themes Test</h1>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {{> themeSection title="Bootstrap 3" template="bootstrap3"}}
+      {{> themeSection title="Bootstrap 4" template="bootstrap4"}}
+      {{> themeSection title="Bootstrap 5" template="bootstrap5"}}
+      {{> themeSection title="Plain" template="plain"}}
+      {{> themeSection title="Tailwind" template="tailwind"}}
+    </div>
+  </div>
+</template>
+
+<template name="themeSection">
+  <div class="border rounded-lg p-4">
+    <h2 class="text-xl font-bold mb-4">{{title}}</h2>
+    {{> quickForm collection=collection id=formId type="insert" template=template}}
+  </div>
+</template>

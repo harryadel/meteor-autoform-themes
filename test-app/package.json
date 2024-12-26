@@ -1,0 +1,17 @@
+{
+  "name": "autoform-themes-test",
+  "private": true,
+  "scripts": {
+    "start": "METEOR_PACKAGE_DIRS=../packages meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.20.7",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
+    "bootstrap3": "^3.3.5",
+    "jquery": "^3.7.1",
+    "meteor-node-stubs": "^1.2.5",
+    "tailwindcss": "^3.4.0"
+  }
+}

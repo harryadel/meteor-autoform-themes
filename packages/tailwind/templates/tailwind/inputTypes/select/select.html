@@ -1,0 +1,9 @@
+<template name="afSelect_tailwind">
+  <select {{this.atts}} class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm {{#if afFieldIsInvalid name=this.name}}border-red-500{{/if}}">
+    {{#if this.value}}
+      {{#each this.items}}
+        <option value="{{this.value}}" {{selected}}>{{this.label}}</option>
+      {{/each}}
+    {{/if}}
+  </select>
+</template>
