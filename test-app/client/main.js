@@ -1,12 +1,16 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-import SimpleSchema from 'simpl-schema';
+import 'meteor/aldeed:collection2/static';
+import SimpleSchema from 'meteor/aldeed:simple-schema';
 import './main.html';
 
 // Import Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@popperjs/core';
 import 'bootstrap';
+
+
+SimpleSchema.extendOptions(['autoform']);
+
 
 // Create a test collection
 const TestCollection = new Mongo.Collection('test_collection');
