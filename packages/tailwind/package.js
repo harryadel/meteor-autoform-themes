@@ -7,10 +7,10 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('2.13.3');
+  api.versionsFrom(['1.3', '2.7.3', '3.0.1']);
   api.use('ecmascript');
-  api.use('templating@1.4.2');
-  api.use('aldeed:autoform@7.0.0');
+  api.use('templating');
+  api.use('aldeed:autoform@7.0.0 || 8.0.0-rc.3');
 
   api.addFiles([
     'autoform-tailwind.js',
