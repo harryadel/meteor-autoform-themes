@@ -12,17 +12,18 @@ Package.describe({
 })
 
 Package.onUse(function (api) {
-  api.versionsFrom('METEOR@1.3')
+  api.versionsFrom(['1.3', '2.7.3', '3.0.1'])
   api.use('ecmascript')
   api.use([
-    'templating@1.3.2',
-    'aldeed:autoform@6.0.0 || 7.0.0'
+    'templating',
+    'aldeed:autoform@6.0.0 || 7.0.0 || 8.0.0-rc.3'
   ], 'client')
 
   api.mainModule('autoform-bootstrap3.js')
 })
 
 Package.onTest(function (api) {
+  api.versionsFrom(['1.3', '2.7.3', '3.0.1'])
   api.use('ecmascript')
   api.use('tinytest')
   api.use('communitypackages:autoform-bootstrap3')
