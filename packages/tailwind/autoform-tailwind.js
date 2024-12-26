@@ -1,1 +1,1 @@
-AutoForm.setDefaultTemplate('tailwind');
+export const AutoFormThemeTailwind = {}
