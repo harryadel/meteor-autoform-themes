@@ -6,7 +6,8 @@ blaze-html-templates    # Compile .html files into Meteor Blaze views
 jquery@3.0.0                  # Wrapper package for npm-installed jquery
 reactive-var          # Reactive variable for tracker
 tracker                # Meteor's client-side reactive programming library
-standard-minifier-css   # CSS minifier run for production mode
+standard-minifier-css  # CSS minifier with PostCSS support
+minifier-css   # CSS minifier with PostCSS support
 standard-minifier-js    # JS minifier run for production mode
 es5-shim               # ECMAScript 5 compatibility for older browsers
 ecmascript            # Enable ECMAScript2015+ syntax in app code
@@ -14,6 +15,9 @@ typescript             # Enable TypeScript syntax in .ts and .tsx files
 shell-server           # Server-side component of the `meteor shell` command
 hot-module-replacement  # Update client in development without reloading
 blaze-hot               # Update files using Blaze's API in development without reloading
+
+ostrio:flow-router-extra
+pwix:blaze-layout
 
 # AutoForm and its themes
 aldeed:autoform@8.0.0-rc.4

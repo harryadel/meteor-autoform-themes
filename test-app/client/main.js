@@ -8,28 +8,23 @@ import { AutoFormThemeBootstrap4 } from 'meteor/communitypackages:autoform-boots
 import { AutoFormThemeBootstrap3 } from 'meteor/communitypackages:autoform-bootstrap3/static'
 import { AutoFormPlainTheme } from 'meteor/communitypackages:autoform-plain/static'
 import { AutoFormThemeTailwind } from 'meteor/communitypackages:autoform-tailwind/static'
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import './main.html';
+import './main.css';
+import './themes/bootstrap3.html';
+import './themes/bootstrap4.html';
+import './themes/bootstrap5.html';
+import './themes/plain.html';
+import './themes/tailwind.html';
 
 SimpleSchema.extendOptions(['autoform']);
-
-// Import packages
-AutoFormThemeBootstrap5.load()
-AutoFormThemeBootstrap4.load()
-AutoFormThemeBootstrap3.load()
-AutoFormPlainTheme.load()
-AutoFormThemeTailwind.load()
 
 // Import Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Create a test collection
 const TestCollection = new Mongo.Collection('test_collection');
-
-// Helper function to get current theme
-function getCurrentTheme() {
-  return currentTheme.get();
-}
 
 // Create a schema for the test collection
 const TestSchema = new SimpleSchema({
@@ -107,7 +102,7 @@ const TestSchema = new SimpleSchema({
     label: 'Gender',
     allowedValues: ['Male', 'Female', 'Other', 'Prefer not to say'],
     autoform: function() {
-      const theme = getCurrentTheme();
+      const theme = 'bootstrap3';
       return {
         type: theme.startsWith('bootstrap') ? 'radio-inline' : 'radio'
       };
@@ -225,26 +220,72 @@ const TestSchema = new SimpleSchema({
 // Attach schema to collection
 TestCollection.attachSchema(TestSchema);
 
-// Initialize theme
-const currentTheme = new ReactiveVar('bootstrap3');
+// Set up routes
+FlowRouter.route('/', {
+  name: 'home',
+  action() {
+    BlazeLayout.render('mainLayout', { content: 'home' });
+  }
+});
+
+FlowRouter.route('/bootstrap3', {
+  name: 'bootstrap3',
+  action() {
+    AutoFormThemeBootstrap3.load();
+    BlazeLayout.render('mainLayout', { content: 'bootstrap3Theme' });
+  }
+});
+
+FlowRouter.route('/bootstrap4', {
+  name: 'bootstrap4',
+  action() {
+    AutoFormThemeBootstrap4.load();
+    BlazeLayout.render('mainLayout', { content: 'bootstrap4Theme' });
+  }
+});
+
+FlowRouter.route('/bootstrap5', {
+  name: 'bootstrap5',
+  action() {
+    AutoFormThemeBootstrap5.load();
+    BlazeLayout.render('mainLayout', { content: 'bootstrap5Theme' });
+  }
+});
+
+FlowRouter.route('/plain', {
+  name: 'plain',
+  action() {
+    AutoFormPlainTheme.load();
+    BlazeLayout.render('mainLayout', { content: 'plainTheme' });
+  }
+});
+
+FlowRouter.route('/tailwind', {
+  name: 'tailwind',
+  action() {
+    AutoFormThemeTailwind.load();
+    BlazeLayout.render('mainLayout', { content: 'tailwindTheme' });
+  }
+});
+
+// Configure default layout
+BlazeLayout.setRoot('body');
 
 Template.mainLayout.helpers({
-  currentTheme() {
-    return currentTheme.get();
-  },
-  collection() {
-    return TestCollection;
-  },
-  isActiveTab(theme) {
-    return currentTheme.get() === theme ? 'border-blue-500 text-blue-600' : 'border-transparent';
+  isActive(route) {
+    return FlowRouter.getRouteName() === route;
   }
 });
 
 Template.mainLayout.events({
-  'click .theme-button'(event) {
+  'click .theme-link'(event) {
     event.preventDefault();
-    const theme = event.currentTarget.getAttribute('data-theme');
-    currentTheme.set(theme);
-    console.log(theme);
+    const route = event.currentTarget.getAttribute('data-route');
+    FlowRouter.go(route);
   }
+});
+
+// Common helper for all theme templates
+Template.registerHelper('collection', function() {
+  return TestCollection;
 });

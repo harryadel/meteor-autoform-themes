@@ -1,0 +1,27 @@
+<template name="bootstrap3Theme">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Bootstrap 3 Theme</h1>
+    {{#autoForm collection=collection id="bootstrap3Form" type="normal" template="bootstrap3"}}
+      {{> afQuickField name="firstName"}}
+      {{> afQuickField name="lastName"}}
+      {{> afQuickField name="email"}}
+      {{> afQuickField name="website"}}
+      {{> afQuickField name="age"}}
+      {{> afQuickField name="rating"}}
+      {{> afQuickField name="country"}}
+      {{> afQuickField name="interests"}}
+      {{> afQuickField name="gender"}}
+      {{> afQuickField name="subscribe"}}
+      {{> afQuickField name="terms"}}
+      {{> afQuickField name="bio"}}
+      {{> afQuickField name="comments"}}
+      {{> afQuickField name="birthDate"}}
+      {{> afQuickField name="registrationDate"}}
+      {{> afQuickField name="address"}}
+      {{> afQuickField name="education"}}
+      <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    {{/autoForm}}
+  </div>
+</template>

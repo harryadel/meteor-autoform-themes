@@ -1,3 +1,10 @@
+/* Tailwind base styles */
 @tailwind base;
+
+/* Tailwind component classes */
 @tailwind components;
+
+/* Tailwind utility classes */
 @tailwind utilities;
+
+/* Your custom styles below */

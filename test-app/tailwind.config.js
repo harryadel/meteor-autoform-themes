@@ -1,14 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./client/**/*.{js,jsx,ts,tsx,html}'],
+  content: [
+    "./client/**/*.{html,js}",
+    "./client/*.{html,js}"
+  ],
   theme: {
     extend: {},
   },
   plugins: [],
-  // Important: prevent Tailwind from purging styles from other themes
-  safelist: [
-    {
-      pattern: /.*/
-    },
-  ]
+  corePlugins: {
+    preflight: false, // Disable Tailwind's reset
+  }
 }
